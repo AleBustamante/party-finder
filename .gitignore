@@ -1,0 +1,90 @@
+# =========================================
+# Android / Kotlin / Gradle .gitignore
+# =========================================
+
+# --- Gradle ---
+.gradle/
+build/
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# --- Android Studio ---
+.idea/
+*.iml
+*.ipr
+*.iws
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+
+# --- Keystores & Secrets ---
+*.jks
+*.keystore
+*.key
+*.pem
+*.p12
+*.asc
+local.properties
+gradle.properties
+
+# --- Log / Temp Files ---
+*.log
+*.tmp
+*.temp
+*.swp
+*.lock
+
+# --- Android Artifacts ---
+*.apk
+*.ap_
+*.aab
+*.dex
+*.class
+*.so
+*.jar
+*.war
+*.ear
+
+# --- Captures & Profiling ---
+captures/
+outputs/
+*.hprof
+
+# --- OS / Editor Files ---
+.DS_Store
+Thumbs.db
+ehthumbs.db
+*.orig
+*.rej
+
+# --- Kotlin / IntelliJ specific ---
+out/
+bin/
+*.kotlin_module
+
+# --- NDK / CMake ---
+.cxx/
+externalNativeBuild/
+
+# --- Misc ---
+# local test results, coverage, generated reports
+test-results/
+coverage/
+reports/
+
+# --- Jetpack Compose ---
+compose-snapshots/
+*.ui-tooling-preview.xml
+
+# --- Gradle Daemon logs ---
+.gradle-daemon/
+gradle-app.setting
+.gradle/configuration-cache/
+
+# --- Firebase / Google Services ---
+google-services.json
+GoogleService-Info.plist
+
