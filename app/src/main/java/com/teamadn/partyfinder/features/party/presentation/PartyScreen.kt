@@ -38,16 +38,24 @@ fun PartyScreen(viewModel: PartyViewModel = koinViewModel()) {
 
 @Composable
 fun PartyList(parties: List<PartyModel>) {
-    LazyColumn(
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        items(parties) { party ->
-            PartyCard(party = party)
+    if (parties.isEmpty()) { // <-- AÑADE ESTA CONDICIÓN
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text = "No hay fiestas disponibles en este momento.")
+        }
+    } else {
+        LazyColumn(
+            contentPadding = PaddingValues(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            items(parties) { party ->
+                PartyCard(party = party)
+            }
         }
     }
 }
-
 @Composable
 fun PartyCard(party: PartyModel) {
     Card(

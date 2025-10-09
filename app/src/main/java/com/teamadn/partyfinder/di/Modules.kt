@@ -9,6 +9,7 @@ import com.teamadn.partyfinder.features.party.domain.usecase.GetPartiesUseCase
 import com.teamadn.partyfinder.features.party.presentation.PartyViewModel
 import com.teamadn.partyfinder.navigation.NavigationViewModel
 import okhttp3.OkHttpClient
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -33,15 +34,16 @@ val appModule = module {
             .build()
     }
 
+    // Database
+    single { AppRoomDatabase.getDatabase(androidContext()) }
 
     // Party Feature Dependencies
-    single(named("partyDao")) { get<AppRoomDatabase>().partyDao() }
+    single { get<AppRoomDatabase>().partyDao() } // <-- QUITA EL 'named' qualifier
     single { PartyRealTimeRemoteDataSource() }
-    single { PartyLocalDataSource(get(named("partyDao"))) }
+    single { PartyLocalDataSource(get()) } // <-- QUITA EL 'named' qualifier
     single<IPartyRepository> { PartyRepository(get(), get()) }
     factory { GetPartiesUseCase(get()) }
     viewModel { PartyViewModel(get()) }
 
 
-    viewModel { NavigationViewModel() }
-}
+    viewModel { NavigationViewModel() }}
