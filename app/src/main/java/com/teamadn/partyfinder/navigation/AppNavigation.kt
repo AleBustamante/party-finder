@@ -7,6 +7,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.teamadn.partyfinder.features.auth.presentation.LoginScreen
+import com.teamadn.partyfinder.features.auth.presentation.RegisterScreen
 import com.teamadn.partyfinder.features.party.presentation.PartyScreen
 
 @Composable
@@ -42,10 +44,19 @@ fun AppNavigation(navigationViewModel: NavigationViewModel) {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Party.route // Pantalla de inicio
+        //startDestination = Screen.Party.route // Pantalla de inicio
+        startDestination = Screen.Login.route
     ) {
         composable(Screen.Party.route) {
             PartyScreen()
+        }
+
+        // NUEVO: Rutas de autenticación
+        composable(Screen.Login.route) {
+            LoginScreen()
+        }
+        composable(Screen.Register.route) {
+            RegisterScreen()
         }
     }
 }

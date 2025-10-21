@@ -15,6 +15,7 @@ koinAndroid = "3.3.0"
 koinAndroidxCompose = "3.3.0"
 coilCompose = "3.2.0"
 retrofit = "3.0.0"
+firebaseAuth = "23.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,6 +36,7 @@ room-runtime = { group="androidx.room", name="room-runtime", version.ref="room"}
 room-compiler = { group="androidx.room", name="room-compiler", version.ref="room"}
 room-ktx = { group="androidx.room", name="room-ktx", version.ref="room"}
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuth" } # <-- NUEVA LIBRERÍA (usamos -ktx para coroutines)
 
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroidxCompose" }
@@ -42,7 +44,6 @@ coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCo
 coil-network = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilCompose" }
 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
-
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
