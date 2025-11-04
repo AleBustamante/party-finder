@@ -63,6 +63,7 @@ dependencies {
     implementation (libs.koin.androidx.compose)
 
     implementation(libs.firebase.database)
+    implementation(libs.firebase.auth)
 
     implementation(libs.coil.compose)
     implementation(libs.coil.network)
