@@ -1,5 +1,13 @@
 package com.teamadn.partyfinder.di
 
+import com.google.firebase.auth.FirebaseAuth
+import com.teamadn.partyfinder.features.auth.data.datasource.AuthRemoteDataSource
+import com.teamadn.partyfinder.features.auth.data.repository.AuthRepository
+import com.teamadn.partyfinder.features.auth.domain.repository.IAuthRepository
+import com.teamadn.partyfinder.features.auth.domain.usecase.LoginUseCase
+import com.teamadn.partyfinder.features.auth.domain.usecase.RegisterUseCase
+import com.teamadn.partyfinder.features.auth.presentation.LoginViewModel
+import com.teamadn.partyfinder.features.auth.presentation.RegisterViewModel
 import com.teamadn.partyfinder.features.party.data.database.AppRoomDatabase
 import com.teamadn.partyfinder.features.party.data.datasource.PartyLocalDataSource
 import com.teamadn.partyfinder.features.party.data.datasource.PartyRealTimeRemoteDataSource
@@ -37,13 +45,25 @@ val appModule = module {
     // Database
     single { AppRoomDatabase.getDatabase(androidContext()) }
 
+    // Firebase
+    single { FirebaseAuth.getInstance() } // <-- NUEVO: Proveedor de Firebase Auth
+
     // Party Feature Dependencies
-    single { get<AppRoomDatabase>().partyDao() } // <-- QUITA EL 'named' qualifier
+    single { get<AppRoomDatabase>().partyDao() }
     single { PartyRealTimeRemoteDataSource() }
-    single { PartyLocalDataSource(get()) } // <-- QUITA EL 'named' qualifier
+    single { PartyLocalDataSource(get()) }
     single<IPartyRepository> { PartyRepository(get(), get()) }
     factory { GetPartiesUseCase(get()) }
     viewModel { PartyViewModel(get()) }
+
+
+    // MODIFICADO: Auth Feature Dependencies
+    single { AuthRemoteDataSource(get()) }
+    single<IAuthRepository> { AuthRepository(get()) }
+    factory { RegisterUseCase(get()) }
+    factory { LoginUseCase(get()) }
+    viewModel { LoginViewModel(get()) } // <-- MODIFICADO
+    viewModel { RegisterViewModel(get()) } // <-- MODIFICADO
 
 
     viewModel { NavigationViewModel() }}
