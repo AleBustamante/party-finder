@@ -16,6 +16,8 @@ koinAndroidxCompose = "3.3.0"
 coilCompose = "3.2.0"
 retrofit = "3.0.0"
 firebaseAuth = "23.0.0"
+firebaseMessaging = "25.0.1"
+firebaseConfig = "23.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -44,6 +46,8 @@ coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCo
 coil-network = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilCompose" }
 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
+firebase-config = { group = "com.google.firebase", name = "firebase-config", version.ref = "firebaseConfig" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
