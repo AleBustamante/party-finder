@@ -21,6 +21,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.teamadn.partyfinder.features.party.domain.model.PartyModel
+import com.teamadn.partyfinder.navigation.NavigationOptions
 import com.teamadn.partyfinder.navigation.NavigationViewModel
 import com.teamadn.partyfinder.navigation.Screen
 import org.koin.androidx.compose.koinViewModel
@@ -46,8 +47,16 @@ fun PartyScreen(
             TopAppBar(
                 title = { Text("Fiestas Disponibles") },
                 actions = {
-                    // Botón de Logout
-                    IconButton(onClick = { viewModel.onLogout() }) {
+                    IconButton(onClick = {
+                        // 1. Ejecutar lógica de negocio (Firebase sign out)
+                        viewModel.onLogout()
+
+                        // 2. Ejecutar navegación usando la instancia correcta
+                        navigationViewModel.navigateTo(
+                            Screen.Login.route,
+                            NavigationOptions.CLEAR_BACK_STACK
+                        )
+                    }) {
                         Icon(
                             imageVector = Icons.Default.ExitToApp,
                             contentDescription = "Cerrar Sesión"
@@ -56,7 +65,6 @@ fun PartyScreen(
                 }
             )
         }
-
     )
     { padding ->
         Column(
