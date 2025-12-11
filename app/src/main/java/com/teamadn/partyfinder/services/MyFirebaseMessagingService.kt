@@ -13,41 +13,35 @@ import com.teamadn.partyfinder.MainActivity
 import com.teamadn.partyfinder.R
 import kotlin.random.Random
 
-class PartyFirebaseMessagingService : FirebaseMessagingService() {
+class MyFirebaseMessagingService : FirebaseMessagingService() {
 
-    override fun onNewToken(token: String) {
-        super.onNewToken(token)
-        // Aquí podrías enviar el token a tu base de datos si necesitas enviar notificaciones a usuarios específicos.
-        // Por ejemplo: userRepository.updatePushToken(token)
-        // Como tu app usa Auth, podrías guardar esto en el nodo del usuario en Firebase Realtime Database.
-    }
-
+    // Se llama cuando llega un mensaje y la app está en primer plano o background
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
 
-        // Las notificaciones pueden venir con datos (data payload) o notificación visual (notification payload).
-        // Si la app está en primer plano, este método se dispara para ambos.
-
+        // Extraer título y cuerpo, ya sea de la carga de notificación o de datos
         val title = remoteMessage.notification?.title ?: remoteMessage.data["title"] ?: "Nueva Fiesta"
-        val message = remoteMessage.notification?.body ?: remoteMessage.data["body"] ?: "¡Revisa las nuevas fiestas disponibles!"
+        val body = remoteMessage.notification?.body ?: remoteMessage.data["body"] ?: "¡Revisa las novedades!"
 
-        showNotification(title, message)
+        showNotification(title, body)
     }
 
     private fun showNotification(title: String, message: String) {
+        // Intent para abrir la app al tocar la notificación
         val intent = Intent(this, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
 
-        // PendingIntent para abrir la app al tocar la notificación
         val pendingIntent = PendingIntent.getActivity(
             this, 0, intent,
             PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        val channelId = "party_finder_updates"
+        val channelId = "party_channel"
+
+        // Configuración visual de la notificación
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.ic_launcher_foreground) // Asegúrate de tener un icono válido, usa el del sistema por ahora
+            .setSmallIcon(R.drawable.ic_launcher_foreground) // Usa un icono existente
             .setContentTitle(title)
             .setContentText(message)
             .setAutoCancel(true)
@@ -56,16 +50,21 @@ class PartyFirebaseMessagingService : FirebaseMessagingService() {
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        // Crear canal de notificación para Android O y superior
+        // Crear canal (Obligatorio para Android 8+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
-                "Actualizaciones de Fiestas",
+                "Notificaciones de Fiestas",
                 NotificationManager.IMPORTANCE_HIGH
             )
             notificationManager.createNotificationChannel(channel)
         }
 
         notificationManager.notify(Random.nextInt(), notificationBuilder.build())
+    }
+
+    // Este método es necesario aunque no lo usemos ahora, para renovar tokens
+    override fun onNewToken(token: String) {
+        super.onNewToken(token)
     }
 }

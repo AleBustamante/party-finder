@@ -14,6 +14,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import com.google.firebase.messaging.FirebaseMessaging
 
 
 class MainActivity : ComponentActivity() {
@@ -33,6 +34,21 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // 1. Pedir permiso de notificaciones
+        askNotificationPermission()
+
+        // 2. Suscribirse al tema "general" automáticamente al abrir la app
+        FirebaseMessaging.getInstance().subscribeToTopic("general")
+            .addOnCompleteListener { task ->
+                var msg = "Suscrito a notificaciones generales"
+                if (!task.isSuccessful) {
+                    msg = "Falló la suscripción"
+                }
+                Log.d("FCM", msg)
+            }
+
+
         currentIntent = intent
 
         enableEdgeToEdge()
@@ -47,17 +63,13 @@ class MainActivity : ComponentActivity() {
     }
     private fun askNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) !=
                 PackageManager.PERMISSION_GRANTED
             ) {
-                // Ya tengo permiso
-            } else {
-                // Pedir permiso
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         }
     }
-
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         Log.d("MainActivity", "onNewIntent llamado")
