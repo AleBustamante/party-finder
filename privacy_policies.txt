@@ -1,0 +1,83 @@
+Política de Privacidad
+1. Datos personales que se recopilan
+
+Encuentra tu Party recopila los siguientes tipos de datos:
+
+Datos de registro
+
+Nombre completo
+
+Correo electrónico
+
+Contraseña cifrada
+
+2. Finalidades del tratamiento
+
+Los datos se utilizan para:
+
+Crear y mantener la cuenta del usuario.
+
+Prevenir fraudes y accesos no autorizados.
+
+Mejorar la experiencia dentro de la aplicación.
+
+3. Compartición de datos
+
+La información del usuario podrá ser compartida únicamente con:
+
+Proveedores tecnológicos necesarios para la operación del servicio (servidores, correos, sistemas de verificación).
+
+Autoridades competentes cuando exista un requerimiento legal.
+
+Encuentra tu Party no comercializa ni vende datos personales a terceros.
+
+4. Conservación de datos
+
+Los datos se conservarán mientras:
+
+El usuario mantenga su cuenta activa, o
+
+Sea necesario para cumplir con obligaciones legales o administrativas.
+
+El usuario puede solicitar la eliminación de sus datos en cualquier momento.
+
+5. Seguridad
+
+Se aplican medidas técnicas y administrativas para proteger los datos personales, incluyendo:
+
+Cifrado de contraseñas
+
+Conexiones seguras (HTTPS)
+
+Servidores protegidos
+
+Controles internos de acceso
+
+Aun así, se advierte que ningún sistema es completamente inmune a incidentes de seguridad.
+
+6. Derechos del usuario
+
+El usuario puede ejercer los siguientes derechos sobre sus datos:
+
+Acceso
+
+Rectificación
+
+Eliminación
+
+Oposición al uso de datos con fines promocionales
+
+7. Uso de cookies
+
+La aplicación puede utilizar cookies o tecnologías similares para:
+
+Mantener sesiones activas
+
+Personalizar la experiencia
+
+Realizar análisis estadísticos de uso
+
+8. Modificaciones de la política
+
+Encuentra tu Party podrá actualizar esta Política de Privacidad.
+Los cambios serán notificados mediante la aplicación o por correo electrónico.
