@@ -3,8 +3,11 @@ package com.teamadn.partyfinder.navigation
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 enum class NavigationOptions {
@@ -12,14 +15,36 @@ enum class NavigationOptions {
     CLEAR_BACK_STACK,
     REPLACE_HOME
 }
-class NavigationViewModel : ViewModel() {
-
+class NavigationViewModel(
+    private val remoteConfig: FirebaseRemoteConfig
+) : ViewModel() {
+    private val _isMaintenanceMode = MutableStateFlow<Boolean?>(null)
+    val isMaintenanceMode = _isMaintenanceMode.asStateFlow()
     sealed class NavigationCommand {
         data class NavigateTo(val route: String, val options: NavigationOptions = NavigationOptions.DEFAULT) : NavigationCommand()
         object PopBackStack : NavigationCommand()
     }
     private val _navigationCommand = MutableSharedFlow<NavigationCommand>()
     val navigationCommand = _navigationCommand.asSharedFlow()
+
+    init {
+        checkMaintenanceStatus()
+    }
+
+    fun checkMaintenanceStatus() {
+        // FetchAndActivate obtiene los valores de la nube y los activa
+        remoteConfig.fetchAndActivate()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Obtenemos el valor booleano (asegúrate que la key coincida con la de Firebase Console)
+                    val isMaintenance = remoteConfig.getBoolean("is_maintenance_mode")
+                    _isMaintenanceMode.value = isMaintenance
+                } else {
+                    // Si falla, usamos el valor por defecto (false)
+                    _isMaintenanceMode.value = false
+                }
+            }
+    }
 
     fun navigateTo(route: String, options: NavigationOptions = NavigationOptions.DEFAULT) {
         viewModelScope.launch {

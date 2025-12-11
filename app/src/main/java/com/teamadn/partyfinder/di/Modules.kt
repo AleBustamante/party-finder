@@ -1,6 +1,8 @@
 package com.teamadn.partyfinder.di
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.remoteConfigSettings
 import com.teamadn.partyfinder.features.auth.data.datasource.AuthRemoteDataSource
 import com.teamadn.partyfinder.features.auth.data.repository.AuthRepository
 import com.teamadn.partyfinder.features.auth.domain.repository.IAuthRepository
@@ -48,6 +50,20 @@ val appModule = module {
             .build()
     }
 
+    // --- Remote Config ---
+    single {
+        val remoteConfig = FirebaseRemoteConfig.getInstance()
+        val configSettings = remoteConfigSettings {
+            // Para desarrollo, pon el intervalo en 0 o muy bajo para ver cambios rápido.
+            // Para producción, usa 3600 (1 hora) o más.
+            minimumFetchIntervalInSeconds = 3600
+        }
+        remoteConfig.setConfigSettingsAsync(configSettings)
+        // Valores por defecto (opcional pero recomendado)
+        remoteConfig.setDefaultsAsync(mapOf("is_maintenance_mode" to false))
+        remoteConfig
+    }
+
     // Database
     single { AppRoomDatabase.getDatabase(androidContext()) }
 
@@ -82,4 +98,4 @@ val appModule = module {
     viewModel { RegisterViewModel(get()) }
 
 
-    viewModel { NavigationViewModel() }}
+    viewModel { NavigationViewModel(get()) }}
