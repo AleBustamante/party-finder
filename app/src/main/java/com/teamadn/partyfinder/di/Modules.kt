@@ -54,9 +54,7 @@ val appModule = module {
     single {
         val remoteConfig = FirebaseRemoteConfig.getInstance()
         val configSettings = remoteConfigSettings {
-            // Para desarrollo, pon el intervalo en 0 o muy bajo para ver cambios rápido.
-            // Para producción, usa 3600 (1 hora) o más.
-            minimumFetchIntervalInSeconds = 3600
+            minimumFetchIntervalInSeconds = 10
         }
         remoteConfig.setConfigSettingsAsync(configSettings)
         // Valores por defecto (opcional pero recomendado)
