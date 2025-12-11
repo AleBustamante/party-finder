@@ -15,6 +15,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -25,13 +26,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.teamadn.partyfinder.navigation.NavigationOptions
+import com.teamadn.partyfinder.navigation.NavigationViewModel
+import com.teamadn.partyfinder.navigation.Screen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun RegisterScreen(
-    viewModel: RegisterViewModel = koinViewModel()
+    viewModel: RegisterViewModel = koinViewModel(),
+    navigationViewModel: NavigationViewModel = koinViewModel() // Inyectar
 ) {
-    // MODIFICADO: Consumimos los dos nuevos estados
     val fieldsState by viewModel.fieldsState.collectAsState()
     val authState by viewModel.authState.collectAsState()
 
@@ -42,7 +46,7 @@ fun RegisterScreen(
         when (val state = authState) {
             is AuthUIState.Success -> {
                 Toast.makeText(context, "¡Registro exitoso! UID: ${state.uid}", Toast.LENGTH_LONG).show()
-                // TODO: navigationViewModel.navigateTo(Screen.Party.route, NavigationOptions.CLEAR_BACK_STACK)
+                navigationViewModel.navigateTo(Screen.Party.route, NavigationOptions.CLEAR_BACK_STACK)
             }
             is AuthUIState.Error -> {
                 Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
@@ -103,6 +107,15 @@ fun RegisterScreen(
                 enabled = !isLoading
             ) {
                 Text("Registrarse")
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Botón para volver al Login
+            TextButton(
+                onClick = { navigationViewModel.navigateTo(Screen.Login.route) },
+                enabled = !isLoading
+            ) {
+                Text("¿Ya tienes cuenta? Inicia sesión")
             }
         }
 

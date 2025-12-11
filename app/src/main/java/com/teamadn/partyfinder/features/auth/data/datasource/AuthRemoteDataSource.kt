@@ -25,4 +25,8 @@ class AuthRemoteDataSource(private val firebaseAuth: FirebaseAuth) {
             AuthResult.Error(e.message ?: "Error desconocido")
         }
     }
+
+    fun logout() {
+        firebaseAuth.signOut()
+    }
 }

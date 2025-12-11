@@ -26,10 +26,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
+import com.teamadn.partyfinder.navigation.NavigationViewModel // Asegúrate de importar esto
+import com.teamadn.partyfinder.navigation.Screen
+import com.teamadn.partyfinder.navigation.NavigationOptions
+import androidx.compose.material3.TextButton
 
 @Composable
 fun LoginScreen(
-    viewModel: LoginViewModel = koinViewModel()
+    viewModel: LoginViewModel = koinViewModel(),
+    navigationViewModel: NavigationViewModel = koinViewModel()
 ) {
     // MODIFICADO: Consumimos los dos nuevos estados
     val fieldsState by viewModel.fieldsState.collectAsState()
@@ -42,17 +47,15 @@ fun LoginScreen(
     LaunchedEffect(authState) {
         when (val state = authState) {
             is AuthUIState.Success -> {
-                // Éxito, en el futuro navegarías a la pantalla principal
-                Toast.makeText(context, "¡Bienvenido! UID: ${state.uid}", Toast.LENGTH_LONG).show()
-                // TODO: navigationViewModel.navigateTo(Screen.Party.route, NavigationOptions.CLEAR_BACK_STACK)
+                // Navegar a Party y limpiar el historial para que no pueda volver al login con "Atrás"
+                navigationViewModel.navigateTo(Screen.Party.route, NavigationOptions.CLEAR_BACK_STACK)
             }
             is AuthUIState.Error -> {
                 Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
             }
-            else -> Unit // Idle o Loading
+            else -> Unit
         }
     }
-
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
@@ -93,6 +96,15 @@ fun LoginScreen(
                 enabled = !isLoading // MODIFICADO
             ) {
                 Text("Ingresar")
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Botón para ir al Registro
+            TextButton(
+                onClick = { navigationViewModel.navigateTo(Screen.Register.route) },
+                enabled = !isLoading
+            ) {
+                Text("¿No tienes cuenta? Regístrate aquí")
             }
         }
 

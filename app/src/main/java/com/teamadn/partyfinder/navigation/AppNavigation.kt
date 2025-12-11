@@ -16,47 +16,39 @@ import com.teamadn.partyfinder.features.party.presentation.PartyScreen
 fun AppNavigation(navigationViewModel: NavigationViewModel) {
     val navController: NavHostController = rememberNavController()
 
-    // Manejar navegación desde el ViewModel
-    LaunchedEffect(Unit) {
+    LaunchedEffect(key1 = Unit) {
         navigationViewModel.navigationCommand.collect { command ->
             when (command) {
                 is NavigationViewModel.NavigationCommand.NavigateTo -> {
-                    navController.navigate(command.route) {
-                        // Configuración del back stack según sea necesario
-                        when (command.options) {
-                            NavigationOptions.CLEAR_BACK_STACK -> {
-                                popUpTo(0) // Limpiar todo el back stack
-                            }
-                            NavigationOptions.REPLACE_HOME -> {
-                                popUpTo(Screen.Party.route) { inclusive = true }
-                            }
-                            else -> {
-                                // Navegación normal
-                            }
+                    if (command.options == NavigationOptions.CLEAR_BACK_STACK) {
+                        navController.navigate(command.route) {
+                            popUpTo(0)
                         }
+                    } else {
+                        navController.navigate(command.route)
                     }
                 }
-                is NavigationViewModel.NavigationCommand.PopBackStack -> {
-                    navController.popBackStack()
-                }
+                is NavigationViewModel.NavigationCommand.PopBackStack -> navController.popBackStack()
             }
         }
     }
-
     NavHost(
         navController = navController,
         //startDestination = Screen.Party.route // Pantalla de inicio
-        startDestination = Screen.Party.route
+        startDestination = Screen.Login.route
     ) {
         composable(Screen.Party.route) {
             PartyScreen(navigationViewModel = navigationViewModel)
         }
+
         composable(Screen.Login.route) {
-            LoginScreen()
+            LoginScreen(navigationViewModel = navigationViewModel)
         }
+
         composable(Screen.Register.route) {
-            RegisterScreen()
+            RegisterScreen(navigationViewModel = navigationViewModel)
         }
+
         composable(Screen.Favorites.route) {
             FavoriteScreen()
         }

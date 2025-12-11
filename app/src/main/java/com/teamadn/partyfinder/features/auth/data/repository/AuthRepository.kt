@@ -19,4 +19,8 @@ class AuthRepository(
         // o crear una entrada en Realtime Database.
         return remoteDataSource.register(email, password)
     }
+
+    override fun logout() {
+        remoteDataSource.logout()
+    }
 }

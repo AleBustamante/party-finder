@@ -9,13 +9,17 @@ import com.teamadn.partyfinder.features.party.domain.usecase.GetPartiesUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import com.teamadn.partyfinder.features.auth.domain.usecase.LogoutUseCase
+import com.teamadn.partyfinder.navigation.NavigationViewModel
+import com.teamadn.partyfinder.navigation.Screen
+import com.teamadn.partyfinder.navigation.NavigationOptions
 
 class PartyViewModel(
     private val getPartiesUseCase: GetPartiesUseCase,
-    private val getFavoritesUseCase: GetFavoritesUseCase, // Nuevo
-    private val toggleFavoriteUseCase: ToggleFavoriteUseCase // Nuevo
+    private val getFavoritesUseCase: GetFavoritesUseCase,
+    private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
+    private val logoutUseCase: LogoutUseCase, // Nuevo
 ) : ViewModel() {
-
     // Wrapper para la UI que incluye si es favorito
     data class PartyUiModel(
         val party: PartyModel,
@@ -46,6 +50,10 @@ class PartyViewModel(
         viewModelScope.launch {
             toggleFavoriteUseCase(party)
         }
+    }
+
+    fun onLogout() {
+        logoutUseCase() // Ejecuta el caso de uso
     }
 
     private fun fetchAndFilterParties() {

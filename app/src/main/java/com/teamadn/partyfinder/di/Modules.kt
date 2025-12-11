@@ -7,6 +7,7 @@ import com.teamadn.partyfinder.features.auth.data.datasource.AuthRemoteDataSourc
 import com.teamadn.partyfinder.features.auth.data.repository.AuthRepository
 import com.teamadn.partyfinder.features.auth.domain.repository.IAuthRepository
 import com.teamadn.partyfinder.features.auth.domain.usecase.LoginUseCase
+import com.teamadn.partyfinder.features.auth.domain.usecase.LogoutUseCase
 import com.teamadn.partyfinder.features.auth.domain.usecase.RegisterUseCase
 import com.teamadn.partyfinder.features.auth.presentation.LoginViewModel
 import com.teamadn.partyfinder.features.auth.presentation.RegisterViewModel
@@ -75,7 +76,7 @@ val appModule = module {
     single<IPartyRepository> { PartyRepository(get(), get()) }
     factory { GetPartiesUseCase(get()) }
     //viewModel { PartyViewModel(get()) }
-    viewModel { PartyViewModel(get(), get(), get()) }
+    viewModel { PartyViewModel(get(), get(), get(), get()) }
 
 
     // --- Favorites Feature Dependencies ---
@@ -92,6 +93,7 @@ val appModule = module {
     single<IAuthRepository> { AuthRepository(get()) }
     factory { RegisterUseCase(get()) }
     factory { LoginUseCase(get()) }
+    factory { LogoutUseCase(get()) }
     viewModel { LoginViewModel(get()) }
     viewModel { RegisterViewModel(get()) }
 

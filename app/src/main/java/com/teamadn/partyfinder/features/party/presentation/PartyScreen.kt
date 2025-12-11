@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.List
@@ -23,10 +25,11 @@ import com.teamadn.partyfinder.navigation.NavigationViewModel
 import com.teamadn.partyfinder.navigation.Screen
 import org.koin.androidx.compose.koinViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PartyScreen(
     viewModel: PartyViewModel = koinViewModel(),
-    navigationViewModel: NavigationViewModel // Inyectado para navegar
+    navigationViewModel: NavigationViewModel
 ) {
     val state by viewModel.uiState.collectAsState()
     val searchQuery by viewModel.searchQuery.collectAsState()
@@ -38,8 +41,24 @@ fun PartyScreen(
             }) {
                 Icon(Icons.Default.List, contentDescription = "Ver Favoritos")
             }
+        },
+        topBar = {
+            TopAppBar(
+                title = { Text("Fiestas Disponibles") },
+                actions = {
+                    // Botón de Logout
+                    IconButton(onClick = { viewModel.onLogout() }) {
+                        Icon(
+                            imageVector = Icons.Default.ExitToApp,
+                            contentDescription = "Cerrar Sesión"
+                        )
+                    }
+                }
+            )
         }
-    ) { padding ->
+
+    )
+    { padding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -63,8 +82,6 @@ fun PartyScreen(
                     }
                 }
                 is PartyViewModel.PartyUIState.Success -> {
-                    // Usamos la lista reutilizable.
-                    // Convertimos PartyUiModel a lo que la lista necesita.
                     PartyList(
                         parties = currentState.data.map { it.party },
                         isFavorite = { partyId ->
