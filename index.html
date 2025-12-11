@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitud de Eliminación de Datos - Encuentra tu Party</title>
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+            --border-color: #ced4da;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            color: var(--dark-text);
+            border-bottom: 2px solid var(--light-bg);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        /* Policy Section Styling */
+        .policy-section {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+        }
+
+        .policy-section strong {
+            color: var(--primary-color);
+        }
+
+        ul {
+            list-style: disc;
+            margin-left: 20px;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-sizing: border-box; 
+        }
+
+        .btn-delete {
+            background-color: #dc3545; /* Red color for deletion */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        /* Footer/Disclaimer */
+        .disclaimer {
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9em;
+            color: var(--secondary-color);
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Solicitud de Eliminación de Cuenta y Datos</h1>
+        <p>Esta página es provista por <strong>Encuentra tu Party</strong></p>
+
+        <div class="policy-section">
+            <h2>Pasos para la Solicitud de Eliminación (Encuentra tu Party)</h2>
+            <p>Para solicitar la eliminación permanente de tu cuenta y datos asociados, sigue estos pasos:</p>
+            <ol>
+                <li><strong>Ingresa tus credenciales:</strong> Proporciona el correo electrónico y la contraseña de tu cuenta para verificar tu identidad en el formulario a continuación.</li>
+                <li><strong>Envía la solicitud:</strong> Haz clic en el botón "Solicitar Eliminación de Cuenta".</li>
+                <li><strong>Confirmación:</strong> Recibirás un correo electrónico de confirmación de recepción en la dirección asociada a tu cuenta. El proceso de eliminación se completará en un plazo máximo de <strong>14 días laborables</strong>.</li>
+            </ol>
+        </div>
+        
+        <div class="policy-section">
+            <h2>Tipos de Datos Eliminados y Retenidos</h2>
+            
+            <h3>Datos Eliminados:</h3>
+            <p>Al procesar tu solicitud, eliminaremos o anonimizaremos de forma permanente los siguientes datos:</p>
+            <ul>
+                <li><strong>Datos de Perfil:</strong> Nombre de usuario, correo electrónico, foto de perfil y otra información biográfica.</li>
+                <li><strong>Contenido de Usuario:</strong> Todos los eventos creados, comentarios, mensajes directos y cualquier otro contenido subido por el usuario.</li>
+            </ul>
+
+            <h3>Datos Retenidos (Período de Retención Adicional):</h3>
+            <p>De acuerdo con la ley aplicable, debemos retener ciertos datos por un período limitado:</p>
+            <ul>
+                <li><strong>Datos Transaccionales/Legales:</strong> Podemos retener información de registros financieros (si aplica) y logs de servidor básicos por un período de hasta <strong>12 meses</strong> para cumplir con obligaciones legales, fiscales y de seguridad. Esta información estará disociada de tu perfil una vez eliminado.</li>
+            </ul>
+        </div>
+
+        <h2>Formulario de Solicitud</h2>
+        <form id="deletionForm">
+            <div class="form-group">
+                <label for="email">Correo Electrónico:</label>
+                <input type="email" id="email" name="email" required placeholder="tu.correo@ejemplo.com">
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña (para verificación de identidad):</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn-delete">Solicitar Eliminación de Cuenta</button>
+        </form>
+
+
+    </div>
+
+    <script>
+        // Simulación de la funcionalidad del formulario
+        document.getElementById('deletionForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Detiene el envío real del formulario
+
+            const email = document.getElementById('email').value;
+            
+            // Simula el proceso de envío
+            alert(`✅ Solicitud enviada para la cuenta: ${email}.`);
+
+            // Opcional: limpiar el formulario después de la simulación
+            document.getElementById('deletionForm').reset();
+        });
+    </script>
+</body>
+</html>
