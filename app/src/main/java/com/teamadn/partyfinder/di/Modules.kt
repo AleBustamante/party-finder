@@ -8,6 +8,12 @@ import com.teamadn.partyfinder.features.auth.domain.usecase.LoginUseCase
 import com.teamadn.partyfinder.features.auth.domain.usecase.RegisterUseCase
 import com.teamadn.partyfinder.features.auth.presentation.LoginViewModel
 import com.teamadn.partyfinder.features.auth.presentation.RegisterViewModel
+import com.teamadn.partyfinder.features.favorites.data.datasource.FavoriteLocalDataSource
+import com.teamadn.partyfinder.features.favorites.data.repository.FavoriteRepository
+import com.teamadn.partyfinder.features.favorites.domain.repository.IFavoriteRepository
+import com.teamadn.partyfinder.features.favorites.domain.usecase.GetFavoritesUseCase
+import com.teamadn.partyfinder.features.favorites.domain.usecase.ToggleFavoriteUseCase
+import com.teamadn.partyfinder.features.favorites.presentation.FavoriteViewModel
 import com.teamadn.partyfinder.features.party.data.database.AppRoomDatabase
 import com.teamadn.partyfinder.features.party.data.datasource.PartyLocalDataSource
 import com.teamadn.partyfinder.features.party.data.datasource.PartyRealTimeRemoteDataSource
@@ -54,7 +60,17 @@ val appModule = module {
     single { PartyLocalDataSource(get()) }
     single<IPartyRepository> { PartyRepository(get(), get()) }
     factory { GetPartiesUseCase(get()) }
-    viewModel { PartyViewModel(get()) }
+    //viewModel { PartyViewModel(get()) }
+    viewModel { PartyViewModel(get(), get(), get()) }
+
+
+    // --- Favorites Feature Dependencies ---
+    single { get<AppRoomDatabase>().favoriteDao() }
+    single { FavoriteLocalDataSource(get()) }
+    single<IFavoriteRepository> { FavoriteRepository(get()) }
+    factory { GetFavoritesUseCase(get()) }
+    factory { ToggleFavoriteUseCase(get()) }
+    viewModel { FavoriteViewModel(get(), get()) }
 
 
     // MODIFICADO: Auth Feature Dependencies
@@ -62,8 +78,8 @@ val appModule = module {
     single<IAuthRepository> { AuthRepository(get()) }
     factory { RegisterUseCase(get()) }
     factory { LoginUseCase(get()) }
-    viewModel { LoginViewModel(get()) } // <-- MODIFICADO
-    viewModel { RegisterViewModel(get()) } // <-- MODIFICADO
+    viewModel { LoginViewModel(get()) }
+    viewModel { RegisterViewModel(get()) }
 
 
     viewModel { NavigationViewModel() }}

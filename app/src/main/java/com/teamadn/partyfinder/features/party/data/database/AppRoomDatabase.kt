@@ -4,13 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.teamadn.partyfinder.features.favorites.data.database.dao.IFavoriteDao
+import com.teamadn.partyfinder.features.favorites.data.database.entity.FavoritePartyEntity
 import com.teamadn.partyfinder.features.party.data.database.dao.IPartyDao
 import com.teamadn.partyfinder.features.party.data.database.entity.PartyEntity
 
-@Database(entities = [PartyEntity::class], version = 2) // Incremented version
+@Database(entities = [PartyEntity::class, FavoritePartyEntity::class], version = 3)
 abstract class AppRoomDatabase : RoomDatabase() {
     abstract fun partyDao(): IPartyDao
-
+    abstract fun favoriteDao(): IFavoriteDao // <-- Nuevo DAO
 
     companion object {
         @Volatile
