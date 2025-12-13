@@ -4,6 +4,9 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.rememberScrollState // Importar
+import androidx.compose.foundation.verticalScroll // Importar
+import androidx.compose.ui.platform.testTag // Importar IMPORTANTE
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -60,7 +63,8 @@ fun LoginScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -71,7 +75,9 @@ fun LoginScreen(
                 value = fieldsState.email, // MODIFICADO
                 onValueChange = viewModel::onEmailChanged,
                 label = { Text("Correo Electrónico") },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag("email_input"),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 singleLine = true,
                 enabled = !isLoading // MODIFICADO
@@ -82,7 +88,9 @@ fun LoginScreen(
                 value = fieldsState.password, // MODIFICADO
                 onValueChange = viewModel::onPasswordChanged,
                 label = { Text("Contraseña") },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag("password_input"),
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 singleLine = true,
@@ -92,7 +100,9 @@ fun LoginScreen(
 
             Button(
                 onClick = viewModel::onLoginClicked,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag("login_button"),
                 enabled = !isLoading // MODIFICADO
             ) {
                 Text("Ingresar")
@@ -102,6 +112,7 @@ fun LoginScreen(
             // Botón para ir al Registro
             TextButton(
                 onClick = { navigationViewModel.navigateTo(Screen.Register.route) },
+                modifier = Modifier.testTag("register_link"),
                 enabled = !isLoading
             ) {
                 Text("¿No tienes cuenta? Regístrate aquí")
